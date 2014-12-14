@@ -24,6 +24,7 @@ function find_item(target_item)
     end
     for i,v in pairs(windower.ffxi.get_items().inventory) do
         if v.id and res.items[v.id] and (res.items[v.id].en:lower() == target_item:lower() or res.items[v.id].enl:lower() == target_item:lower()) then
+            print('found weapon '..target_item)
             windower.packets.inject_outgoing(0x29,string.char(0x29,6,0,0,1,0,0,0,0,bag_id,i,0x52))
             coroutine.sleep(2)
             print('weapon skills done = '..extdata.decode(windower.ffxi.get_items().inventory[i]).ws_points)
@@ -41,7 +42,6 @@ function get_back_item(target_item)
     for i,v in pairs(windower.ffxi.get_items()[bag:lower()]) do
         if v.id and res.items[v.id] and (res.items[v.id].en:lower() == target_item:lower() or res.items[v.id].enl:lower() == target_item:lower()) then
             windower.packets.inject_outgoing(0x29,string.char(0x29,6,0,0,1,0,0,0,bag_id,0,i,0x52))
-            print('done')
             break
         end
     end
@@ -62,6 +62,7 @@ windower.register_event('addon command', function(command, ...)
         for i,v in pairs(trial_weapons) do
             find_item(v)
         end
+        print('done')
     end
     if command == 'unequip' then
         unequip = not unequip
