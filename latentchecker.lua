@@ -8,7 +8,7 @@ extdata = require 'extdata'
 res = require 'resources'
 bag = 'Satchel'
 bag_id = 5
-unequip = true
+unequip = false
 function check_space()
     for i,v in pairs(res.bags) do
         if v.access == "everywhere" and v.en ~= "inventory" and windower.ffxi.get_items(v.id).max ~= windower.ffxi.get_items(v.id).count then
@@ -62,5 +62,8 @@ windower.register_event('addon command', function(command, ...)
         for i,v in pairs(trial_weapons) do
             find_item(v)
         end
+    end
+    if command == 'unequip' then
+        unequip = not unequip
     end
 end)
